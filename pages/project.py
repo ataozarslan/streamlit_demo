@@ -20,7 +20,7 @@ st.markdown("- It not only directly impacts the revenue, but also leads to poor 
 st.markdown("- Specifically, **cancellations made close to the time of service are the most damaging** for hotels because they leave management with no time to react!")
 
 # Resim Ekleme
-st.image("images/cancelled-holidays.jpg")
+st.image("images/hotel-cancelations.png")
 
 st.markdown("After the latest developments in the artificial intelligence industry, they expect us to develop a **machine learning model** in line with their needs and help them with their research.")
 st.markdown("In order to fill this gap, this study aims to identify individuals who are likely to cancel in the short term with AI techniques using the dataset shared with us by the hotel.")
