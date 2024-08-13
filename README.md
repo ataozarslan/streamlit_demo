@@ -19,7 +19,7 @@ You can examine the project in detail using the app, this app allows you to:
 ```plaintext
 streamlit_demo/
 ├── images/                        # Images used by the app and repository
-│   ├── `app.png`                    
+│   ├── app.png                    
 │   ├── hotel-cancelations.png     
 │   └── hotel-service.png          
 │   ├── shap_bar_plot.png          # SHAP Global Explainability Bar Plot
