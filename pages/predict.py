@@ -1,7 +1,10 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 import streamlit as st
 from joblib import load
 from datetime import date, datetime
+import shap
+import pickle
 
 # Sayfa Ayarları
 st.set_page_config(
@@ -34,13 +37,13 @@ avg_price_per_room = st.number_input("Average Room Price", min_value=0)
 #---------------------------------------------------------------------------------------------------------------------
 
 # Pickle kütüphanesi kullanarak eğitilen modelin tekrardan kullanılması
-xgb_model = load('hotel_cancellation_model.pkl')
+xgb_model = load("hotel_cancellation_model.pkl")
 
 arrival_day = arrival_date.day
 arrival_month = arrival_date.month
 arrival_year = arrival_date.year
 
-if market_segment_type == 'Online':
+if market_segment_type == "Online":
     market_segment_type = 1
 else:
     market_segment_type = 0
@@ -70,7 +73,7 @@ st.header("Results")
 if st.button("Submit"):
 
     # Info mesajı oluşturma
-    st.info("You can find the result below.")
+    st.info("You can find the prediction results below.")
 
     today = date.today()
     time = datetime.now().strftime("%H:%M:%S")
@@ -96,6 +99,22 @@ if st.button("Submit"):
     })
 
     st.dataframe(online_results_df)
+
+    with open("explainer.pkl", "rb") as explainer:
+        explainer = pickle.load(explainer)
+
+    with open("test_features.pkl", "rb") as test_features:
+        test_features = pickle.load(test_features)
+    
+    test_data = pd.concat([test_features, input_df], ignore_index=True)
+
+    shap_values = explainer(test_data)
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+    shap.waterfall_plot(shap_values[-1], show=False)
+
+    st.info("You can find the Shap Explanation of your prediction!")
+    st.pyplot(fig)
 
 else:
     st.markdown("Please click the *Submit Button*!")
